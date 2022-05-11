@@ -1,3 +1,5 @@
+using Contracts;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Controllers
@@ -10,24 +12,22 @@ namespace CompanyEmployees.Controllers
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
+        private readonly ILoggerManager _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILoggerManager logger)
         {
             _logger = logger;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<string> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            _logger.LogInfo("Här är en Info log från kontrollern");
+            _logger.LogDebug("Här är en Debug log från kontrollern");
+            _logger.LogWarn("Här är en Warn log från kontrollern");
+            _logger.LogError("Här är en Error log från kontrollern");
+
+            return new string[] { "Värde 1", "Värde 2" };
         }
     }
 }
