@@ -1,6 +1,7 @@
 using CompanyEmployees.Extensions;
 using NLog;
 using Microsoft.AspNetCore.HttpOverrides;
+using Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -19,9 +20,10 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-    app.UseDeveloperExceptionPage();
-else
+var logger = app.Services.GetRequiredService<ILoggerManager>();
+app.ConfigureExceptionHandler(logger);
+
+if (app.Environment.IsProduction())    
     app.UseHsts();
 
 // Configure the HTTP request pipeline.
