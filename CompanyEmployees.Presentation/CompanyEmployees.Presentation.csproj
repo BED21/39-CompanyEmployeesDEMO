@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.5" />
     <PackageReference Include="Microsoft.Aspnetcore.mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.MVC.NewtonsoftJson" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>

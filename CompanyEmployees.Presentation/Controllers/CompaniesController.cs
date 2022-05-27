@@ -47,6 +47,9 @@ public class CompaniesController : ControllerBase
         if (company is null)
             return BadRequest("CompanyForCreationDto object is null");
 
+        if (ModelState.IsValid is false)
+            return UnprocessableEntity(ModelState);
+
         var createdCompany = _service.CompanyService.CreateCompany(company);
 
         return CreatedAtRoute("CompanyById", new { id = createdCompany.Id }, createdCompany);
@@ -56,6 +59,9 @@ public class CompaniesController : ControllerBase
     public IActionResult CreateCompanyCollection([FromBody]
             IEnumerable<CompanyForCreationDto> companyCollection)
     {
+        if (ModelState.IsValid is false)
+            return UnprocessableEntity(ModelState);
+
         var result = _service.CompanyService.CreateCompanyCollection(companyCollection);
 
         return CreatedAtRoute("CompanyCollection",
