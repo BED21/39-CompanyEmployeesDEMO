@@ -1,12 +1,12 @@
-﻿
-using Contracts;
-
+﻿using Contracts;
 using Entities.Models;
 
 namespace Repository;
-public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
+
+internal sealed class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
 {
-    public EmployeeRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+    public EmployeeRepository(RepositoryContext repositoryContext)
+        : base(repositoryContext)
     {
     }
 
@@ -16,8 +16,7 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
         .ToList();
 
     public Employee GetEmployee(Guid companyId, Guid id, bool trackChanges) =>
-        FindByCondition(e => e.CompanyId.Equals(companyId) && e.Id.Equals(id),
-            trackChanges: false)
+        FindByCondition(e => e.CompanyId.Equals(companyId) && e.Id.Equals(id), trackChanges)
         .SingleOrDefault();
 
     public void CreateEmployeeForCompany(Guid companyId, Employee employee)
